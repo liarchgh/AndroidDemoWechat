@@ -1,0 +1,68 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <RelativeLayout
+        android:id="@+id/rl0"
+		android:layout_width="match_parent"
+		android:layout_height="40dp"
+        >
+		<TextView  
+			android:id="@+id/tv0"
+			android:layout_width="match_parent"  
+			android:layout_height="match_parent"  
+			android:textColor="@drawable/tv_status"
+			android:clickable="true"
+			android:textSize="15sp"
+			android:gravity="center_vertical"
+			android:text="Run n n n n n naanan n n nana n an an nan ana n nan na nan an an an "
+
+			android:verticalScrollbarPosition="right"
+			android:singleLine="true"  
+			android:ellipsize="marquee"
+			android:focusable="true"
+			android:focusableInTouchMode="true"
+			android:drawableLeft="@drawable/ic_launcher"
+			
+			android:background="@drawable/tv_shape"
+			android:onClick="clickToSee"
+			/>
+		<TextView  
+		    android:layout_alignRight="@id/tv0"
+			android:id="@+id/tv2"
+			android:layout_width="15dp"  
+			android:layout_height="15dp"  
+			android:textColor="#00ff00"
+			android:clickable="true"
+			android:textSize="8sp"
+			android:gravity="center"
+			android:text="10"
+
+			android:background="@drawable/air_shape"
+			android:onClick="clickToSee"
+			/>
+    </RelativeLayout>
+    <TextView  
+        android:id="@+id/tv1"
+        android:layout_width="match_parent"  
+        android:layout_height="50dp"  
+        android:textColor="@drawable/tv_status"
+        android:clickable="true"
+        android:textSize="15sp"
+        android:gravity="center_vertical"
+        android:text="Run n n n n n naanan n n nana n an an nan ana n nan na nan an an an "
+
+        android:verticalScrollbarPosition="right"
+        android:singleLine="true"  
+		android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:drawableLeft="@drawable/ic_launcher"
+        
+        android:background="@drawable/tv_shape"
+        android:onClick="clickToSee"
+        />
+</LinearLayout>
