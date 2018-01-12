@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.provider.ContactsContract.CommonDataKinds.Relation;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,17 +20,32 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewTreeObserver.OnTouchModeChangeListener;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	TextView tv0;
+	LinearLayout ll0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		tv0 = (TextView)findViewById(R.id.tv0);
+		ll0 = (LinearLayout)findViewById(R.id.ll0);
+//		tv0 = (TextView)findViewById(R.id.tv0);
+		
+		//动态设置LinearLayout
+//		for(int i = 0; i < ll0.getChildCount(); ++i) {
+//			tv0 = (TextView)((RelativeLayout)ll0.getChildAt(i)).getChildAt(0);
+//			tv0.setText("AAAA");
+//		}
+//		tv0 = new TextView(MainActivity.this);
+//		tv0.setWidth(100);
+//		tv0.setHeight(50);
+//		tv0.setText("ASASAS");
+//		ll0.addView(tv0, 1);
 
 //		//timer+post动态省略号
 //		Timer tm = new Timer();
