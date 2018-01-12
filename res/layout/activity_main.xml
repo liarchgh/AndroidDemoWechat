@@ -12,19 +12,41 @@
 		android:layout_height="40dp"
 		android:background="@drawable/rl_shape"
         >
-        <ImageView 
+        <FrameLayout
             android:id="@+id/iv0"
+            android:layout_height="match_parent"
+            android:layout_width="60dp"
+            android:visibility="visible"
+            >
+        <ImageView 
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="15dp"
             android:layout_margin="10dp"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
             android:src="@drawable/timg"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
 
 			android:background="@drawable/iv_shape"
 			android:onClick="clickToSee"
             />
+		<TextView  
+		    android:layout_gravity="top|right"
+			android:id="@+id/tv3"
+			android:layout_width="wrap_content"  
+			android:layout_height="15dp"  
+			android:minWidth="15dp"  
+			android:textColor="#00ff00"
+			android:clickable="true"
+			android:textSize="8sp"
+			android:gravity="center"
+			android:singleLine="true"
+			android:text="..."
+
+			android:background="@drawable/air_shape"
+			android:onClick="clickToSee"
+			/>
+        </FrameLayout>
 		<TextView  
 		    android:layout_toRightOf="@id/iv0"
 		    android:layout_alignParentTop="true"
@@ -69,22 +91,6 @@
 			android:text="14:30"
 
 			android:background="@drawable/tv_shape"
-			android:onClick="clickToSee"
-			/>
-		<TextView  
-		    android:layout_alignParentTop="true"
-		    android:layout_toLeftOf="@id/tv0"
-			android:id="@+id/tv3"
-			android:layout_width="15dp"  
-			android:layout_height="15dp"  
-			android:textColor="#00ff00"
-			android:clickable="true"
-			android:textSize="8sp"
-			android:gravity="center"
-			android:singleLine="true"
-			android:text="10"
-
-			android:background="@drawable/air_shape"
 			android:onClick="clickToSee"
 			/>
     </RelativeLayout>
