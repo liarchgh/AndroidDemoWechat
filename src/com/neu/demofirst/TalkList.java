@@ -1,42 +1,37 @@
 package com.neu.demofirst;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.provider.ContactsContract.CommonDataKinds.Relation;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.view.ViewTreeObserver.OnTouchModeChangeListener;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+public class TalkList extends Activity {
 	TextView tv0;
+	TextView tv1;
+	TextView tv2;
+	TextView tv3;
 	LinearLayout ll0;
+	RelativeLayout rl0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		Log.i("live", "create");
+		setContentView(R.layout.activity_talk_list);
 		
 		ll0 = (LinearLayout)findViewById(R.id.ll0);
-//		tv0 = (TextView)findViewById(R.id.tv0);
+		rl0 = (RelativeLayout)findViewById(R.id.rl0);
+		tv0 = (TextView)findViewById(R.id.tv0);
+		tv1 = (TextView)findViewById(R.id.tv1);
+		tv2 = (TextView)findViewById(R.id.tv2);
+		tv3 = (TextView)findViewById(R.id.tv3);
 		
-		//¶¯Ì¬ÉèÖÃLinearLayout
+		//ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½LinearLayout
 //		for(int i = 0; i < ll0.getChildCount(); ++i) {
 //			tv0 = (TextView)((RelativeLayout)ll0.getChildAt(i)).getChildAt(0);
 //			tv0.setText("AAAA");
@@ -47,7 +42,7 @@ public class MainActivity extends Activity {
 //		tv0.setText("ASASAS");
 //		ll0.addView(tv0, 1);
 
-//		//timer+post¶¯Ì¬Ê¡ÂÔºÅ
+//		//timer+postï¿½ï¿½Ì¬Ê¡ï¿½Ôºï¿½
 //		Timer tm = new Timer();
 //		tm.schedule(new TimerTask() {
 //			
@@ -70,7 +65,7 @@ public class MainActivity extends Activity {
 //			}
 //		}, 1000);
 		
-//		//handler¶¯Ì¬Ê¡ÂÔºÅ
+//		//handlerï¿½ï¿½Ì¬Ê¡ï¿½Ôºï¿½
 //		final Handler hdl = new Handler();
 //		Runnable mR =  new Runnable() {
 //			
@@ -138,17 +133,83 @@ public class MainActivity extends Activity {
 //		});
 		
 //		Log.e("test", tv0.getMaxWidth()+"");
-		
+	}
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		Log.i("live", "start");
+	}
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+		super.onRestart();
+		Log.i("live", "restart");
+	}
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		Log.i("live", "resume");
+	}
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		Log.i("live", "pause");
+	}
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		Log.i("live", "stop");
+	}
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		Log.i("live", "destory");
 	}
 	public void clickToSee(View v) {
 		// TODO Auto-generated method stub
 //				((TextView)v).setText("XXXX");;
+	}
+	public void jump2Login(View v) {
+		Intent it = new Intent();
+		it.setClass(TalkList.this, Login.class);
+		TalkList.this.startActivity(it);
+	}
+	public void jump2Talk(View v) {
 		ObjectAnimator oa = ObjectAnimator.ofFloat(v, "scaleX", 1, 1.5f, 1);
-		oa.setDuration(1000);
+		oa.setDuration(618);
 		oa.start();
 //
 		ObjectAnimator oa0 = ObjectAnimator.ofFloat(v, "scaleY", 1, 1.5f, 1);
-		oa0.setDuration(1000);
+		oa0.setDuration(618);
 		oa0.start();
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				try {
+					Thread.sleep(618);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Intent it = new Intent();
+				it.setClass(TalkList.this, Talk.class);
+				TalkList.this.startActivityForResult(it, 0);
+			}
+		}).start();
+	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		tv1 = (TextView)findViewById(R.id.tv1);
+		tv1.setText(data.getExtras().getString("word"));
+//		tv1.setText("SSSSS");
 	}
 }

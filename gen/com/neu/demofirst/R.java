@@ -12,15 +12,18 @@ public final class R {
     }
     public static final class drawable {
         public static final int air_shape=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int iv_shape=0x7f020002;
-        public static final int rl_shape=0x7f020003;
-        public static final int timg=0x7f020004;
-        public static final int tv_shape=0x7f020005;
-        public static final int tv_status=0x7f020006;
+        public static final int blue=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
+        public static final int line=0x7f020003;
+        public static final int login_shape=0x7f020004;
+        public static final int rl_shape=0x7f020005;
+        public static final int talk_list_shape=0x7f020006;
+        public static final int timg=0x7f020007;
+        public static final int tv_shape=0x7f020008;
+        public static final int tv_status=0x7f020009;
     }
     public static final class id {
-        public static final int iv0=0x7f050002;
+        public static final int fl0=0x7f050002;
         public static final int ll0=0x7f050000;
         public static final int rl0=0x7f050001;
         public static final int tv0=0x7f050004;
@@ -29,10 +32,15 @@ public final class R {
         public static final int tv3=0x7f050003;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
+        public static final int activity_talk=0x7f030000;
+        public static final int activity_talk_list=0x7f030001;
+        public static final int login=0x7f030002;
     }
     public static final class string {
         public static final int app_name=0x7f040000;
         public static final int hello_world=0x7f040001;
+        public static final int title_activity_jump=0x7f040003;
+        public static final int title_activity_login=0x7f040002;
+        public static final int title_activity_talk=0x7f040004;
     }
 }

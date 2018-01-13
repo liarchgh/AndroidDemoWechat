@@ -1,0 +1,199 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        >
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:fadingEdge="vertical"
+            android:scrollbars="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/blue" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="15"
+                        android:text="aaaaaaaaaaaaaaaaaaaaafjkdsajglkjdskaljfd sklj fksdj kjfks djfkds aaaaaaaaaaaaaaaaaaaaafjkdsajglkjdskaljfd sklj fksdj kjfks djfkds aaaaaaaaaaaaaaaaaaaaafjkdsajglkjdskaljfd sklj fksdj kjfks djfkds "/>
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@drawable/line"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="15"
+                        android:text="aaaaaaaaaaaaaaaaaaaaafjkdsajglkjdskaljfd sklj fksdj kjfks djfkds aaaaaaaaaaaaaaaaaaaaafjkdsajglkjdskaljfd sklj fksdj kjfks djfkds aaaaaaaaaaaaaaaaaaaaafjkdsajglkjdskaljfd sklj fksdj kjfks djfkds "/>
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/blue" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@drawable/line"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/blue" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="15"
+                        android:text="aaaaaaaaaaaaaaaaaaaaafjkdsajglkjdskaljfd sklj fksdj kjfks djfkds aaaaaaaaaaaaaaaaaaaaafjkdsajglkjdskaljfd sklj fksdj kjfks djfkds aaaaaaaaaaaaaaaaaaaaafjkdsajglkjdskaljfd sklj fksdj kjfks djfkds "/>
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@drawable/line"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/blue" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="15"
+                        android:text="aaaaaaaaaaaaaaaaaaaaafjkdsajglkjdskaljfd sklj fksdj kjfks djfkds aaaaaaaaaaaaaaaaaaaaafjkdsajglkjdskaljfd sklj fksdj kjfks djfkds aaaaaaaaaaaaaaaaaaaaafjkdsajglkjdskaljfd sklj fksdj kjfks djfkds "/>
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@drawable/line"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/blue" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="15"
+                        android:text="aaaaaaaaaaaaaaaaaaaaafjkdsajglkjdskaljfd sklj fksdj kjfks djfkds aaaaaaaaaaaaaaaaaaaaafjkdsajglkjdskaljfd sklj fksdj kjfks djfkds aaaaaaaaaaaaaaaaaaaaafjkdsajglkjdskaljfd sklj fksdj kjfks djfkds "/>
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@drawable/line"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/blue" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="15"
+                        android:text="aaaaaaaaaaaaaaaaaaaaafjkdsajglkjdskaljfd sklj fksdj kjfks djfkds aaaaaaaaaaaaaaaaaaaaafjkdsajglkjdskaljfd sklj fksdj kjfks djfkds aaaaaaaaaaaaaaaaaaaaafjkdsajglkjdskaljfd sklj fksdj kjfks djfkds "/>
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        />
+                </LinearLayout>
+			</LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/talk_list_shape"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="jump2Main"/>
+    </LinearLayout>
+
+</LinearLayout>
