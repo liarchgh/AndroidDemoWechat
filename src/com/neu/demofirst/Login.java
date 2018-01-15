@@ -68,14 +68,14 @@ public class Login extends Activity {
 		passWord = (EditText)findViewById(R.id.passWord);
 		userNameLl = (LinearLayout)findViewById(R.id.userNameLl);
 		
-		SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
-		Editor etSp = sp.edit();
-		etSp.putString("lisu", "lisu");
-		etSp.apply();
+//		SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
+//		Editor etSp = sp.edit();
+//		etSp.putString("lisu", "lisu");
+//		etSp.apply();
 	}
 	public void login(View v) {
 		SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
-		if(sp.getString(userName.getText().toString(), "\t").equals(passWord.getText().toString())) {
+		if(sp.getString(userName.getText().toString(), "").equals(passWord.getText().toString())) {
 			Intent it = new Intent();
 			it.setClass(Login.this, TalkList.class);
 			it.putExtra("userName", userName.getText().toString());
