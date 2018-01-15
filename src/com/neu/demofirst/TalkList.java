@@ -208,6 +208,7 @@ public class TalkList extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
+		Log.i("TlLive", "getExtras");
 		tv1 = (TextView)findViewById(R.id.tv1);
 		tv1.setText(data.getExtras().getString("word"));
 //		tv1.setText("SSSSS");
