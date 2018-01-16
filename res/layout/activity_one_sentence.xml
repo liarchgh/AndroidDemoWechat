@@ -8,7 +8,7 @@
 			android:layout_height="40dp"
 			android:id="@+id/myIcon"
 			android:scaleType="centerCrop"
-			android:background="@drawable/blue" />
+			/>
 
 		<FrameLayout 
 			android:layout_width="10dp"

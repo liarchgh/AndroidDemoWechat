@@ -65,13 +65,13 @@ public class TalkBaseAdapter extends BaseAdapter {
 		ct.sentence.setText(as.getSentence());
 		ct.myIcon.setImageBitmap(as.getMyIcon());
 		ct.otherIcon.setImageBitmap(as.getOtherIcon());
-		if(as.getMyIcon() == null) {
+		if(as.getMyIcon() != null) {
 			ct.toMe.setVisibility(View.INVISIBLE);
 		}
 		else {
 			ct.toMe.setVisibility(View.VISIBLE);
 		}
-		if(as.getOtherIcon() == null) {
+		if(as.getOtherIcon() != null) {
 			ct.toOther.setVisibility(View.INVISIBLE);
 		}
 		else {

@@ -9,7 +9,9 @@ import com.neu.demoUtil.TalkBaseAdapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -28,13 +30,14 @@ public class Talk extends Activity {
 		stLl = (ListView)Talk.this.findViewById(R.id.sentencesLl);
 		
 		
-		Bitmap bm = getResources().getDrawable(R.drawable.blue);
+		Resources rs = Talk.this.getResources();
+		Bitmap bm = new BitmapDrawable(rs.openRawResource(R.drawable.timg)).getBitmap();
 		
 		List<OneSentence>sts = new ArrayList<OneSentence>();
 		Random rd = new Random();
 		OneSentence tempSt;
-		Bitmap myIcon = null,
-				otherIcon = null;
+		Bitmap myIcon = bm,
+				otherIcon = bm;
 		for(int i = 0; i < 100; ++i) {
 			tempSt = new OneSentence();
 			if(rd.nextBoolean()) {

@@ -19,13 +19,14 @@ public final class R {
         public static final int rl_shape=0x7f020005;
         public static final int sentence_shape=0x7f020006;
         public static final int talk_arrow_shape=0x7f020007;
-        public static final int talk_list_shape=0x7f020008;
-        public static final int timg=0x7f020009;
-        public static final int tv_shape=0x7f02000a;
-        public static final int tv_status=0x7f02000b;
-        public static final int wx_login=0x7f02000c;
-        public static final int wx_talk=0x7f02000d;
-        public static final int wx_talklist=0x7f02000e;
+        public static final int talk_background=0x7f020008;
+        public static final int talk_list_shape=0x7f020009;
+        public static final int timg=0x7f02000a;
+        public static final int tv_shape=0x7f02000b;
+        public static final int tv_status=0x7f02000c;
+        public static final int wx_login=0x7f02000d;
+        public static final int wx_talk=0x7f02000e;
+        public static final int wx_talklist=0x7f02000f;
     }
     public static final class id {
         public static final int fl0=0x7f050006;
