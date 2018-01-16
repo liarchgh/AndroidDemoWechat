@@ -1,22 +1,31 @@
 package com.neu.demofirst;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Random;
+
+import com.neu.demoUtil.MyBaseAdapter;
+import com.neu.demoUtil.TalkData;
+
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class TalkList extends Activity {
-	TextView tv0;
-	TextView tv1;
-	TextView tv2;
-	TextView tv3;
-	LinearLayout ll0;
-	RelativeLayout rl0;
+	private TextView tv1;
+	private LinearLayout ll0;
+	private RelativeLayout rl0;
+	private ListView talksLV;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +35,20 @@ public class TalkList extends Activity {
 		
 		ll0 = (LinearLayout)findViewById(R.id.ll0);
 		rl0 = (RelativeLayout)findViewById(R.id.rl0);
-		tv0 = (TextView)findViewById(R.id.tv0);
-		tv1 = (TextView)findViewById(R.id.tv1);
-		tv2 = (TextView)findViewById(R.id.tv2);
-		tv3 = (TextView)findViewById(R.id.tv3);
+		talksLV = (ListView)findViewById(R.id.talksLV);
 		
+		Random rd = new Random();
+		List<TalkData> talks = new ArrayList<TalkData>();
+		for(int i = 0; i < 100; ++i) {
+			talks.add(new TalkData(null, "Name:"+i, "M:"+i,
+//					rd.nextInt()%120, Calendar.getInstance().getTimeInMillis()));
+					Math.abs(rd.nextInt()%120), rd.nextLong()));
+		}
+		
+		MyBaseAdapter mba = new MyBaseAdapter(talks, TalkList.this);
+		
+		talksLV.setAdapter(mba);
+
 		//��̬����LinearLayout
 //		for(int i = 0; i < ll0.getChildCount(); ++i) {
 //			tv0 = (TextView)((RelativeLayout)ll0.getChildAt(i)).getChildAt(0);
@@ -204,12 +222,12 @@ public class TalkList extends Activity {
 			}
 		}).start();
 	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		Log.i("TlLive", "getExtras");
-		tv1 = (TextView)findViewById(R.id.tv1);
 		tv1.setText(data.getExtras().getString("word"));
 //		tv1.setText("SSSSS");
 	}

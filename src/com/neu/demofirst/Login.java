@@ -1,10 +1,15 @@
 package com.neu.demofirst;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.jar.Attributes;
+
+import com.neu.demoUtil.MyBaseAdapter;
+import com.neu.demoUtil.TalkData;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
@@ -35,6 +40,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver.OnTouchModeChangeListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -85,11 +91,15 @@ public class Login extends Activity {
 //			Dialog dl = new Dialog(Login.this);
 //			dl.setTitle(userName.getText().toString() + " " + sp.getString(userName.getText().toString(), ""));
 //			dl.show();
-			
+	
 			Toast.makeText(Login.this.getApplicationContext(),
 					"Password or username is wrong!\nPlease check and try again.",
 					Toast.LENGTH_SHORT).show();
 		}
+		
+//		//使用inflate向xml中插入layout
+//		View tempV = View.inflate(Login.this, R.layout.activity_talk, userNameLl);
+//		View.inflate(Login.this, R.layout.activity_talk, (LinearLayout)findViewById(R.id.passWordLl));
 	}
 	public void clickToSee(View v) {
 		// TODO Auto-generated method stub
@@ -101,6 +111,7 @@ public class Login extends Activity {
 		ObjectAnimator oa0 = ObjectAnimator.ofFloat(v, "scaleY", 1, 1.5f, 1);
 		oa0.setDuration(1000);
 		oa0.start();
+		
 	}
 	
 	@Override
@@ -112,7 +123,6 @@ public class Login extends Activity {
 			Log.i("finishSum", "finishSum:"+finishSum);
 		}
 		return true;
-//		return super.dispatchKeyEvent(event);
 	}
 	private void clickFinish() {
 		++finishSum;

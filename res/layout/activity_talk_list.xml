@@ -7,7 +7,12 @@
     tools:context="${relativePackage}.${activityClass}"
     android:background="@drawable/talk_list_shape"
     >
-    <LinearLayout 
+    <ListView 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/talksLV"
+        ></ListView>
+<!--     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -31,7 +36,6 @@
 				android:src="@drawable/blue"
 				android:layout_height="40dp"
 				android:layout_width="40dp"
-				android:onClick="clickToSee"
 				android:layout_gravity="center_vertical"
 				/>
 			<TextView  
@@ -41,13 +45,10 @@
 				android:layout_height="15dp"  
 				android:minWidth="15dp"  
 				android:background="@drawable/air_shape"
-				android:clickable="true"
 				android:textSize="8sp"
 				android:gravity="center"
 				android:singleLine="true"
 				android:text="..."
-
-				android:onClick="clickToSee"
 				/>
 			</FrameLayout>
 			<TextView  
@@ -58,13 +59,10 @@
 				android:layout_width="wrap_content"  
 				android:layout_height="wrap_content"  
 				android:textColor="#000000"
-				android:clickable="true"
 				android:textSize="15sp"
 				android:gravity="center_vertical"
 				android:singleLine="true"
 				android:text="Name"
-
-				android:onClick="clickToSee"
 				/>
 			<TextView  
 				android:layout_alignParentBottom="true"
@@ -75,13 +73,10 @@
 				android:id="@+id/tv1"
 				android:layout_width="wrap_content"  
 				android:layout_height="wrap_content"  
-				android:clickable="true"
 				android:textSize="15sp"
 				android:singleLine="true"
 				android:text="Runnnnn n naanan n n nana n an an nan ana n nan na nan an an an "
 				android:textColor="#A0A0A0"
-
-				android:onClick="clickToSee"
 				/>
 			<TextView  
 				android:id="@+id/tv2"
@@ -90,14 +85,11 @@
 				android:paddingTop="6dp"
 				android:layout_width="70dp"  
 				android:layout_height="match_parent"  
-				android:clickable="true"
 				android:gravity="right|top"
 				android:singleLine="true"
 				android:text="14:30"
 				android:textSize="13sp"
 				android:textColor="#A0A0A0"
-
-				android:onClick="clickToSee"
 				/>
 		</RelativeLayout>
 		<TextView 
@@ -106,7 +98,7 @@
 		    android:background="@drawable/line"
 		    />
 	</LinearLayout>
-<!--     <RelativeLayout
+ --><!--     <RelativeLayout
         android:id="@+id/rl1"
 		android:layout_width="match_parent"
 		android:layout_height="40dp"

@@ -5,13 +5,20 @@
     android:orientation="vertical"
     tools:context="${relativePackage}.${activityClass}" >
 
-    <RelativeLayout
+    <ListView 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:id="@+id/sentencesLl"
+        >
+    </ListView>
+ <!--   <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="10"
         >
 
-        <ScrollView
+         <ScrollView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:fadingEdge="vertical"
@@ -176,7 +183,7 @@
 			</LinearLayout>
         </ScrollView>
     </RelativeLayout>
-
+ -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
