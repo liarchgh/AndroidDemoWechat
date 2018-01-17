@@ -11,6 +11,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.FileHandler;
 
 import com.neu.demoUtil.TalkData;
 import com.neu.demoUtil.TalkListBaseAdapter;
@@ -50,8 +51,7 @@ public class TalkList extends Activity {
 		
 		try {
 			Log.i("talks2file", "start");
-			File fl = new File(path);
-			if(!fl.exists()) {
+			if(!new File(path).exists()) {
 				Random rd = new Random();
 				talks = new ArrayList<TalkData>();
 				for(int i = 0; i < 100; ++i) {
