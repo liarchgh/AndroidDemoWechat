@@ -18,9 +18,10 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class MyBaseAdapter extends BaseAdapter {
+public class TalkListBaseAdapter extends BaseAdapter {
 	private List<TalkData>talks;
 	private Context inContext;
+	private ViewGroup parent = null;
 
 	@Override
 	public int getCount() {
@@ -28,7 +29,7 @@ public class MyBaseAdapter extends BaseAdapter {
 		return talks.size();
 	}
 
-	public MyBaseAdapter(List<TalkData>tempTalks, Context inContext) {
+	public TalkListBaseAdapter(List<TalkData>tempTalks, Context inContext) {
 		// TODO Auto-generated constructor stub
 		this.talks = tempTalks;
 		this.inContext = inContext;
@@ -49,18 +50,21 @@ public class MyBaseAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
+		if(this.parent == null) {
+			this.parent = parent;
+		}
 		if(convertView == null) {
 			convertView = createView(parent);
 		}
 		
-		BindDataAndView(convertView, position);
+		bindDataAndView(convertView, position);
 		
 		return convertView;
 	}
 	
 	private View createView(ViewGroup parent) {
 		View v = LayoutInflater.from(inContext).inflate(R.layout.activity_one_talk, parent, false);
-		Content ct = new Content();
+		OneTalkViewContent ct = new OneTalkViewContent();
 		ct.name = (TextView)v.findViewById(R.id.userName);
 		ct.lastMessage = (TextView)v.findViewById(R.id.lastMessage);
 		ct.time = (TextView)v.findViewById(R.id.time);
@@ -68,8 +72,8 @@ public class MyBaseAdapter extends BaseAdapter {
 		v.setTag(ct);
 		return v;
 	}
-	private void BindDataAndView(View convertView, int position) {
-		Content ct = (Content)convertView.getTag();
+	public void bindDataAndView(View convertView, int position) {
+		OneTalkViewContent ct = (OneTalkViewContent)convertView.getTag();
 		TalkData td = talks.get(position);
 		
 		Calendar.getInstance();
@@ -78,19 +82,19 @@ public class MyBaseAdapter extends BaseAdapter {
 		ct.name.setText(td.getUserName());
 		ct.time.setText(new SimpleDateFormat("hh:mm:ss").format(new Date(td.getTime())));
 		int num = td.getMessageNum();
-		String showNum = null;
-		if(num >= 100) {
-			showNum = "...";
+		if(0 == num) {
+			ct.num.setVisibility(View.INVISIBLE);
 		}
 		else {
-			showNum = ""+num;
+			String showNum = null;
+			if(num >= 100) {
+				showNum = "...";
+			}
+			else {
+				showNum = ""+num;
+			}
+			ct.num.setText(showNum);
+			ct.num.setVisibility(View.VISIBLE);
 		}
-		ct.num.setText(showNum);
-	}
-	class Content{
-		TextView name;
-		TextView lastMessage;
-		TextView time;
-		TextView num;
 	}
 }

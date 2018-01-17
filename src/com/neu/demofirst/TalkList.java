@@ -1,53 +1,97 @@
 package com.neu.demofirst;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
-import com.neu.demoUtil.MyBaseAdapter;
 import com.neu.demoUtil.TalkData;
+import com.neu.demoUtil.TalkListBaseAdapter;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 public class TalkList extends Activity {
-	private TextView tv1;
-	private LinearLayout ll0;
-	private RelativeLayout rl0;
 	private ListView talksLV;
-
+	private List<TalkData> talks;
+	private TalkListBaseAdapter mba;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.i("live", "create");
+		
 		setContentView(R.layout.activity_talk_list);
 		
-		ll0 = (LinearLayout)findViewById(R.id.ll0);
-		rl0 = (RelativeLayout)findViewById(R.id.rl0);
 		talksLV = (ListView)findViewById(R.id.talksLV);
 		
 		Random rd = new Random();
-		List<TalkData> talks = new ArrayList<TalkData>();
+		talks = new ArrayList<TalkData>();
 		for(int i = 0; i < 100; ++i) {
 			talks.add(new TalkData(null, "Name:"+i, "M:"+i,
 //					rd.nextInt()%120, Calendar.getInstance().getTimeInMillis()));
 					Math.abs(rd.nextInt()%120), rd.nextLong()));
 		}
 		
-		MyBaseAdapter mba = new MyBaseAdapter(talks, TalkList.this);
+		mba = new TalkListBaseAdapter(talks, TalkList.this);
+
+		talksLV.setOnItemClickListener(new OnItemClickListener() {
+			
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+				// TODO Auto-generated method stub
+				talks.get(position).setMessageNum(0);
+				mba.notifyDataSetChanged();
+				
+				ObjectAnimator oa = ObjectAnimator.ofFloat(view, "scaleX", 1, 1.5f, 1);
+				oa.setDuration(618);
+				oa.start();
+		//
+				ObjectAnimator oa0 = ObjectAnimator.ofFloat(view, "scaleY", 1, 1.5f, 1);
+				oa0.setDuration(618);
+				oa0.start();
+				
+		//		talks.get(20).setUserName("FFFFFFFF");
+		//		mba.UpdateView(20);
+		//		mba.notifyDataSetChanged();
+				
+		//		mba = new TalkListBaseAdapter(talks, TalkList.this);
+		//		talksLV.setAdapter(mba);
+		//		talksLV.notify();
+				
+				new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						try {
+							Thread.sleep(618);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						registerBroadcastReceiver();
+						
+						Intent it = new Intent();
+						it.setClass(TalkList.this, Talk.class);
+						it.putExtra("position", position);
+						TalkList.this.startActivity(it);
+					}
+				}).start();
+			}
+		});
 		
 		talksLV.setAdapter(mba);
+		
 
 		//��̬����LinearLayout
 //		for(int i = 0; i < ll0.getChildCount(); ++i) {
@@ -152,6 +196,44 @@ public class TalkList extends Activity {
 		
 //		Log.e("test", tv0.getMaxWidth()+"");
 	}
+
+//	@Override
+//	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//		// TODO Auto-generated method stub
+//		super.onActivityResult(requestCode, resultCode, data);
+//		String retMsg = data.getExtras().getString("word");
+//		if(retMsg.length() > 0) {
+//			talks.get(requestCode).setLastMessage(retMsg);
+//			mba.notifyDataSetChanged();
+//		}
+//	}
+	
+	private void registerBroadcastReceiver() {
+		IntentFilter it = new IntentFilter();
+		it.addAction("TalkMessage");
+
+		this.registerReceiver(bcReceiver, it);
+	}
+	private void unRegisterBroidcastReceiver() {
+		this.unregisterReceiver(bcReceiver);
+	}
+	
+	private BroadcastReceiver bcReceiver = new BroadcastReceiver() {
+		
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// TODO Auto-generated method stub
+			int position = intent.getIntExtra("position", -1);
+			if(position >= 0) {
+				String retMsg = intent.getExtras().getString("word");
+				if(retMsg.length() > 0) {
+					talks.get(position).setLastMessage(retMsg);
+					mba.notifyDataSetChanged();
+				}
+			}
+		}
+	};
+
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
@@ -196,39 +278,5 @@ public class TalkList extends Activity {
 		Intent it = new Intent();
 		it.setClass(TalkList.this, Login.class);
 		TalkList.this.startActivity(it);
-	}
-	public void jump2Talk(View v) {
-		ObjectAnimator oa = ObjectAnimator.ofFloat(v, "scaleX", 1, 1.5f, 1);
-		oa.setDuration(618);
-		oa.start();
-//
-		ObjectAnimator oa0 = ObjectAnimator.ofFloat(v, "scaleY", 1, 1.5f, 1);
-		oa0.setDuration(618);
-		oa0.start();
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				try {
-					Thread.sleep(618);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Intent it = new Intent();
-				it.setClass(TalkList.this, Talk.class);
-				TalkList.this.startActivityForResult(it, 0);
-			}
-		}).start();
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-		Log.i("TlLive", "getExtras");
-		tv1.setText(data.getExtras().getString("word"));
-//		tv1.setText("SSSSS");
 	}
 }

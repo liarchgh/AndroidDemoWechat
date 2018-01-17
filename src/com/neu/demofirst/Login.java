@@ -8,7 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.jar.Attributes;
 
-import com.neu.demoUtil.MyBaseAdapter;
+import com.neu.demoUtil.TalkListBaseAdapter;
 import com.neu.demoUtil.TalkData;
 
 import android.animation.ObjectAnimator;

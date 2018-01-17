@@ -6,7 +6,7 @@
 		<ImageView
 			android:layout_width="40dp"
 			android:layout_height="40dp"
-			android:id="@+id/myIcon"
+			android:id="@+id/otherIcon"
 			android:scaleType="centerCrop"
 			/>
 
@@ -53,7 +53,7 @@
 				/>
 		</FrameLayout>
 		<ImageView
-			android:id="@+id/otherIcon"
+			android:id="@+id/myIcon"
 			android:layout_width="40dp"
 			android:layout_height="40dp"
 			android:src="@drawable/timg"

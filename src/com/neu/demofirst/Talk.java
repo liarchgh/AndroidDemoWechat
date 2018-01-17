@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.neu.demoUtil.OneSentence;
 import com.neu.demoUtil.TalkBaseAdapter;
+import com.neu.demoUtil.TalkListBaseAdapter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,26 +15,35 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 
 public class Talk extends Activity {
 	private ListView stLl;
+	private EditText toSend;
+	private List<OneSentence>sts = null;
+	private Bitmap bm = null;
+	public static int Status_LastMessage;
+	private Intent it = null;
+	private int position;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_talk);
 		
+		this.position = getIntent().getIntExtra("position", -1);
 		stLl = (ListView)Talk.this.findViewById(R.id.sentencesLl);
-		
+		toSend = (EditText)Talk.this.findViewById(R.id.toSend);
 		
 		Resources rs = Talk.this.getResources();
-		Bitmap bm = new BitmapDrawable(rs.openRawResource(R.drawable.timg)).getBitmap();
+		bm = new BitmapDrawable(rs.openRawResource(R.drawable.timg)).getBitmap();
 		
-		List<OneSentence>sts = new ArrayList<OneSentence>();
+		sts = new ArrayList<OneSentence>();
 		Random rd = new Random();
 		OneSentence tempSt;
 		Bitmap myIcon = bm,
@@ -52,15 +62,35 @@ public class Talk extends Activity {
 		
 		stLl.setAdapter(new TalkBaseAdapter(sts, Talk.this));
 	}
-	public void jump2Main(View v) {
-		Intent it = new Intent();
-//		Intent it = getIntent();
-		it.setClass(Talk.this, TalkList.class);
-		it.putExtra("word", "AAAAAA");
-		Log.i("TalkLive", "putExtra");
-		Talk.this.setResult(0, it);
-//		Talk.this.startActivity(it);
+	public void sendMessage(View v) {
+		String toSendString = toSend.getText().toString();
+		toSend.setText("");
+		sts.add(new OneSentence(null, bm, toSendString));
+		((TalkBaseAdapter)stLl.getAdapter()).notifyDataSetChanged();
+
+//		it = new Intent();
+//		it.setClass(Talk.this, TalkList.class);
+//		it.putExtra("word", toSendString);
+//		Talk.this.setResult(Talk.Status_LastMessage, it);
+
+		it = new Intent();
+		it.setAction("TalkMessage");
+		it.putExtra("word", toSendString);
+		it.putExtra("position", position);
+		sendBroadcast(it);
 	}
+
+//	@Override
+//	public void finish() {
+//		// TODO Auto-generated method stub
+//		if(it == null) {
+//			it = new Intent();
+//			it.setClass(Talk.this, TalkList.class);
+//			it.putExtra("word", "");
+//			Talk.this.setResult(Talk.Status_LastMessage, it);
+//		}
+//		super.finish();
+//	}
 
 //	public void clickToSee(View v) {
 //		// TODO Auto-generated method stub
