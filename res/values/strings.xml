@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">DemoFirst</string>
+    <string name="app_name">IChat</string>
     <string name="hello_world">Hello unity!</string>
-    <string name="title_activity_login">Login</string>
+    <string name="title_activity_login">IChat</string>
     <string name="title_activity_jump">Jump</string>
     <string name="title_activity_talk">Talk</string>
 

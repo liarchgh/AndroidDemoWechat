@@ -1,5 +1,13 @@
 package com.neu.demofirst;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -9,11 +17,14 @@ import com.neu.demoUtil.TalkListBaseAdapter;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Environment;
+import android.renderscript.ScriptGroup.Input;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,9 +33,12 @@ import android.widget.ListView;
 
 public class TalkList extends Activity {
 	private ListView talksLV;
-	private List<TalkData> talks;
+	private List<TalkData> talks = null;
 	private TalkListBaseAdapter mba;
+//	private String path =  Environment.getExternalStorageDirectory().getPath()+File.separator+"talklist.ls";
+	private String path;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,17 +46,42 @@ public class TalkList extends Activity {
 		setContentView(R.layout.activity_talk_list);
 		
 		talksLV = (ListView)findViewById(R.id.talksLV);
+		path = TalkList.this.getFilesDir().getPath()+File.separator+"talklist.ls";
 		
-		Random rd = new Random();
-		talks = new ArrayList<TalkData>();
-		for(int i = 0; i < 100; ++i) {
-			talks.add(new TalkData(null, "Name:"+i, "M:"+i,
-//					rd.nextInt()%120, Calendar.getInstance().getTimeInMillis()));
-					Math.abs(rd.nextInt()%120), rd.nextLong()));
+		try {
+			Log.i("talks2file", "start");
+			File fl = new File(path);
+			if(!fl.exists()) {
+				Random rd = new Random();
+				talks = new ArrayList<TalkData>();
+				for(int i = 0; i < 100; ++i) {
+					talks.add(new TalkData(rd.nextLong(), rd.nextLong(), null,
+						0, "Name:"+i, "M:"+i, Math.abs(rd.nextInt()%120)));
+				}
+		
+				Log.i("talks2file", "has not file");
+				ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path));
+				oos.writeObject(talks);
+				Log.i("talks2file", "success");
+				oos.close();
+			}
+			
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path));
+			talks = (List<TalkData>) ois.readObject();
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			Log.i("talks2file", "file not found error");
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			Log.i("talks2file", "io error");
+			e1.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		mba = new TalkListBaseAdapter(talks, TalkList.this);
-
 		talksLV.setOnItemClickListener(new OnItemClickListener() {
 			
 			@Override
@@ -91,7 +130,6 @@ public class TalkList extends Activity {
 		});
 		
 		talksLV.setAdapter(mba);
-		
 
 		//��̬����LinearLayout
 //		for(int i = 0; i < ll0.getChildCount(); ++i) {
@@ -278,5 +316,23 @@ public class TalkList extends Activity {
 		Intent it = new Intent();
 		it.setClass(TalkList.this, Login.class);
 		TalkList.this.startActivity(it);
+	}
+	@Override
+	public void finish() {
+		// TODO Auto-generated method stub
+		ObjectOutputStream oos;
+		try {
+			oos = new ObjectOutputStream(new FileOutputStream(path));
+			oos.writeObject(talks);
+			Log.i("talks2file", "success");
+			oos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		super.finish();
 	}
 }
