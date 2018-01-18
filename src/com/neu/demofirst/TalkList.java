@@ -25,6 +25,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.renderscript.ScriptGroup.Input;
 import android.util.Log;
 import android.view.View;
@@ -38,107 +40,28 @@ public class TalkList extends Activity {
 	private TalkListBaseAdapter mba;
 //	private String path =  Environment.getExternalStorageDirectory().getPath()+File.separator+"talklist.ls";
 	private String path;
+		
+//	//用于接收线程发来的Message
+//	Handler hd = new Handler() {
+//		@Override
+//		public void handleMessage(Message msg) {
+//			// TODO Auto-generated method stub
+//			super.handleMessage(msg);
+//			Dialog dl = new Dialog(TalkList.this);
+//			dl.setTitle(msg.arg1 + "");
+//			dl.show();
+//		}
+//	};
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		setContentView(R.layout.activity_talk_list);
 		
-		talksLV = (ListView)findViewById(R.id.talksLV);
-		path = TalkList.this.getFilesDir().getPath()+File.separator+"talklist.ls";
-		
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				
-				try {
-					Log.i("talks2file", "start");
-					if(!(new File(path).exists())) {
-						Random rd = new Random();
-						talks = new ArrayList<TalkData>();
-						for(int i = 0; i < 100; ++i) {
-							talks.add(new TalkData(rd.nextLong(), rd.nextLong(), null,
-								0, "Name:"+i, "M:"+i, Math.abs(rd.nextInt()%120)));
-						}
-				
-						Log.i("talks2file", "has not file");
-						ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path));
-						oos.writeObject(talks);
-						Log.i("talks2file", "success");
-						oos.close();
-					}
-					else {
-						ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path));
-						talks = (List<TalkData>) ois.readObject();
-						ois.close();
-					}
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					Log.i("talks2file", "file not found error");
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					Log.i("talks2file", "io error");
-					e1.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				mba = new TalkListBaseAdapter(talks, TalkList.this);
-				talksLV.setAdapter(mba);
-			}
-		}).start();
-		talksLV.setOnItemClickListener(new OnItemClickListener() {
-			
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-				// TODO Auto-generated method stub
-				talks.get(position).setMessageNum(0);
-				mba.notifyDataSetChanged();
-				
-				ObjectAnimator oa = ObjectAnimator.ofFloat(view, "scaleX", 1, 1.5f, 1);
-				oa.setDuration(618);
-				oa.start();
-		//
-				ObjectAnimator oa0 = ObjectAnimator.ofFloat(view, "scaleY", 1, 1.5f, 1);
-				oa0.setDuration(618);
-				oa0.start();
-				
-		//		talks.get(20).setUserName("FFFFFFFF");
-		//		mba.UpdateView(20);
-		//		mba.notifyDataSetChanged();
-				
-		//		mba = new TalkListBaseAdapter(talks, TalkList.this);
-		//		talksLV.setAdapter(mba);
-		//		talksLV.notify();
-				
-				new Thread(new Runnable() {
-					
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						try {
-							Thread.sleep(618);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						
-						registerBroadcastReceiver();
-						
-						Intent it = new Intent();
-						it.setClass(TalkList.this, Talk.class);
-						it.putExtra("position", position);
-						TalkList.this.startActivity(it);
-					}
-				}).start();
-			}
-		});
+		init();
+		setTalkList();
+	}
 		
 
 		//��̬����LinearLayout
@@ -243,7 +166,6 @@ public class TalkList extends Activity {
 //		});
 		
 //		Log.e("test", tv0.getMaxWidth()+"");
-	}
 
 //	@Override
 //	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -351,5 +273,108 @@ public class TalkList extends Activity {
 			}
 		}).start();
 		super.finish();
+	}
+	
+	private void init() {
+		talksLV = (ListView)findViewById(R.id.talksLV);
+		path = TalkList.this.getFilesDir().getPath()+File.separator+"talklist.ls";
+		
+	}
+	private void setTalkList() {
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				
+				try {
+//					//向UI线程发送Message
+//					Message ms = new Message();
+//					ms.arg1 = 22;
+//					hd.sendMessage(ms);
+
+					Log.i("talks2file", "start");
+					if(!(new File(path).exists())) {
+						Random rd = new Random();
+						talks = new ArrayList<TalkData>();
+						for(int i = 0; i < 100; ++i) {
+							talks.add(new TalkData(rd.nextLong(), rd.nextLong(), null,
+								0, "Name:"+i, "M:"+i, Math.abs(rd.nextInt()%120)));
+						}
+				
+						Log.i("talks2file", "has not file");
+						ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path));
+						oos.writeObject(talks);
+						Log.i("talks2file", "success");
+						oos.close();
+					}
+					else {
+						ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path));
+						talks = (List<TalkData>) ois.readObject();
+						ois.close();
+					}
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					Log.i("talks2file", "file not found error");
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					Log.i("talks2file", "io error");
+					e1.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				mba = new TalkListBaseAdapter(talks, TalkList.this);
+				talksLV.setAdapter(mba);
+			}
+		}).start();
+		talksLV.setOnItemClickListener(new OnItemClickListener() {
+			
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+				// TODO Auto-generated method stub
+				talks.get(position).setMessageNum(0);
+				mba.notifyDataSetChanged();
+				
+				ObjectAnimator oa = ObjectAnimator.ofFloat(view, "scaleX", 1, 1.5f, 1);
+				oa.setDuration(618);
+				oa.start();
+		//
+				ObjectAnimator oa0 = ObjectAnimator.ofFloat(view, "scaleY", 1, 1.5f, 1);
+				oa0.setDuration(618);
+				oa0.start();
+				
+		//		talks.get(20).setUserName("FFFFFFFF");
+		//		mba.UpdateView(20);
+		//		mba.notifyDataSetChanged();
+				
+		//		mba = new TalkListBaseAdapter(talks, TalkList.this);
+		//		talksLV.setAdapter(mba);
+		//		talksLV.notify();
+				
+				new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						try {
+							Thread.sleep(618);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						registerBroadcastReceiver();
+						
+						Intent it = new Intent();
+						it.setClass(TalkList.this, Talk.class);
+						it.putExtra("position", position);
+						TalkList.this.startActivity(it);
+					}
+				}).start();
+			}
+		});
 	}
 }
