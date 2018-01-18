@@ -82,6 +82,7 @@ public class TalkListBaseAdapter extends BaseAdapter {
 		ct.lastMessage.setText(td.getLastMessage());
 		ct.name.setText(td.getUserName());
 		ct.time.setText(new SimpleDateFormat("hh:mm:ss").format(new Date(td.getTime())));
+		ct.userID = td.getUserId();
 		int num = td.getMessageNum();
 		if(0 == num) {
 			ct.num.setVisibility(View.INVISIBLE);

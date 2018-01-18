@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.FileHandler;
 
+import com.neu.demoUtil.OneTalkViewContent;
 import com.neu.demoUtil.TalkData;
 import com.neu.demoUtil.TalkListBaseAdapter;
 
@@ -51,7 +52,7 @@ public class TalkList extends Activity {
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			// TODO Auto-generated method stub
-			Log.i("Service live", "connect");
+//			Log.i("Service live", "connect");
 			mBinder = (MyService.MyBinder) service;
 			mService = mBinder.getService();
 			
@@ -61,7 +62,7 @@ public class TalkList extends Activity {
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
 			// TODO Auto-generated method stub
-			Log.i("Service live", "disconnect");
+//			Log.i("Service live", "disconnect");
 //			mIsBind = false;
 		}
 		
@@ -71,13 +72,17 @@ public class TalkList extends Activity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// TODO Auto-generated method stub
-			int position = intent.getIntExtra("position", -1);
-			if(position >= 0) {
-				String retMsg = intent.getExtras().getString("word");
-				if(retMsg.length() > 0) {
-					talks.get(position).setLastMessage(retMsg);
-					mba.notifyDataSetChanged();
+			long userID = intent.getLongExtra("userID", -1);
+			String retMsg = intent.getExtras().getString("word");
+			if(retMsg.length() > 0) {
+				for(Iterator<TalkData>it = talks.iterator(); it.hasNext(); ) {
+					TalkData temp = it.next();
+					if(temp.getUserId() == userID) {
+						temp.setLastMessage(retMsg);
+						break;
+					}
 				}
+				mba.notifyDataSetChanged();
 			}
 		}
 	};
@@ -376,10 +381,11 @@ public class TalkList extends Activity {
 				talksLV.setAdapter(mba);
 			}
 		}).start();
+
 		talksLV.setOnItemClickListener(new OnItemClickListener() {
 			
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+			public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
 				// TODO Auto-generated method stub
 //		//解除绑定服务
 //		Intent its = new Intent();
@@ -389,9 +395,6 @@ public class TalkList extends Activity {
 //		Intent its = new Intent();
 //		its.setClass(TalkList.this, MyService.class);
 //		stopService(its);
-
-				talks.get(position).setMessageNum(0);
-				mba.notifyDataSetChanged();
 				
 				ObjectAnimator oa = ObjectAnimator.ofFloat(view, "scaleX", 1, 1.5f, 1);
 				oa.setDuration(618);
@@ -409,11 +412,28 @@ public class TalkList extends Activity {
 		//		talksLV.setAdapter(mba);
 		//		talksLV.notify();
 				
+				final long userID = ((OneTalkViewContent)view.getTag()).userID;
 				new Thread(new Runnable() {
 					
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
+						for(Iterator<TalkData>it = talks.iterator(); it.hasNext(); ) {
+							TalkData temp = it.next();
+							if(temp.getUserId() == userID) {
+								temp.setMessageNum(0);
+								break;
+							}
+						}
+
+						talksLV.post(new Runnable() {
+							
+							@Override
+							public void run() {
+								// TODO Auto-generated method stub
+								mba.notifyDataSetChanged();
+							}
+						});
 						try {
 							Thread.sleep(618);
 						} catch (InterruptedException e) {
@@ -425,7 +445,7 @@ public class TalkList extends Activity {
 						
 						Intent it = new Intent();
 						it.setClass(TalkList.this, Talk.class);
-						it.putExtra("userID", position);
+						it.putExtra("userID", userID);
 						TalkList.this.startActivity(it);
 					}
 				}).start();

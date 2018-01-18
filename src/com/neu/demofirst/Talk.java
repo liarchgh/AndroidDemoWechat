@@ -29,14 +29,14 @@ public class Talk extends Activity {
 	private Bitmap bm = null;
 	public static int Status_LastMessage;
 	private Intent it = null;
-	private int userID;
+	private long userID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_talk);
 		
-		this.userID = getIntent().getIntExtra("position", -1);
+		this.userID = getIntent().getLongExtra("userID", -1);
 		stLl = (ListView)Talk.this.findViewById(R.id.sentencesLl);
 		toSend = (EditText)Talk.this.findViewById(R.id.toSend);
 		
@@ -59,6 +59,7 @@ public class Talk extends Activity {
 			tempSt.setSentence(i+" fjklsd fjkds jkfjk dsjkf jkdsj fjdsk jfksdaj lkjfkdsj klfjlkdsaj lkfjsdakl jfkldsj klfjdskl fjflkds jkfjds jfdsj fjdsk jfkdsj lkfjdslk jfklds sdf");
 			sts.add(tempSt);
 		}
+Log.i("userid", ""+userID);
 		
 		stLl.setAdapter(new TalkBaseAdapter(sts, Talk.this));
 	}
@@ -71,7 +72,7 @@ public class Talk extends Activity {
 		it = new Intent();
 		it.setAction("TalkMessage");
 		it.putExtra("word", toSendString);
-		it.putExtra("position", position);
+		it.putExtra("userID", userID);
 		sendBroadcast(it);
 	}
 
