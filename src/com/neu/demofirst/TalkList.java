@@ -49,39 +49,50 @@ public class TalkList extends Activity {
 		talksLV = (ListView)findViewById(R.id.talksLV);
 		path = TalkList.this.getFilesDir().getPath()+File.separator+"talklist.ls";
 		
-		try {
-			Log.i("talks2file", "start");
-			if(!new File(path).exists()) {
-				Random rd = new Random();
-				talks = new ArrayList<TalkData>();
-				for(int i = 0; i < 100; ++i) {
-					talks.add(new TalkData(rd.nextLong(), rd.nextLong(), null,
-						0, "Name:"+i, "M:"+i, Math.abs(rd.nextInt()%120)));
-				}
-		
-				Log.i("talks2file", "has not file");
-				ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path));
-				oos.writeObject(talks);
-				Log.i("talks2file", "success");
-				oos.close();
-			}
+		new Thread(new Runnable() {
 			
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path));
-			talks = (List<TalkData>) ois.readObject();
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			Log.i("talks2file", "file not found error");
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			Log.i("talks2file", "io error");
-			e1.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		mba = new TalkListBaseAdapter(talks, TalkList.this);
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				
+				try {
+					Log.i("talks2file", "start");
+					if(!(new File(path).exists())) {
+						Random rd = new Random();
+						talks = new ArrayList<TalkData>();
+						for(int i = 0; i < 100; ++i) {
+							talks.add(new TalkData(rd.nextLong(), rd.nextLong(), null,
+								0, "Name:"+i, "M:"+i, Math.abs(rd.nextInt()%120)));
+						}
+				
+						Log.i("talks2file", "has not file");
+						ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path));
+						oos.writeObject(talks);
+						Log.i("talks2file", "success");
+						oos.close();
+					}
+					else {
+						ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path));
+						talks = (List<TalkData>) ois.readObject();
+						ois.close();
+					}
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					Log.i("talks2file", "file not found error");
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					Log.i("talks2file", "io error");
+					e1.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				mba = new TalkListBaseAdapter(talks, TalkList.this);
+				talksLV.setAdapter(mba);
+			}
+		}).start();
 		talksLV.setOnItemClickListener(new OnItemClickListener() {
 			
 			@Override
@@ -129,7 +140,6 @@ public class TalkList extends Activity {
 			}
 		});
 		
-		talksLV.setAdapter(mba);
 
 		//��̬����LinearLayout
 //		for(int i = 0; i < ll0.getChildCount(); ++i) {
@@ -320,19 +330,26 @@ public class TalkList extends Activity {
 	@Override
 	public void finish() {
 		// TODO Auto-generated method stub
-		ObjectOutputStream oos;
-		try {
-			oos = new ObjectOutputStream(new FileOutputStream(path));
-			oos.writeObject(talks);
-			Log.i("talks2file", "success");
-			oos.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				ObjectOutputStream oos;
+				try {
+					oos = new ObjectOutputStream(new FileOutputStream(path));
+					oos.writeObject(talks);
+					Log.i("talks2file", "save success");
+					oos.close();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}).start();
 		super.finish();
 	}
 }
