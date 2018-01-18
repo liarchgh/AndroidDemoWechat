@@ -20,12 +20,15 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
 import android.renderscript.ScriptGroup.Input;
 import android.util.Log;
@@ -40,6 +43,44 @@ public class TalkList extends Activity {
 	private TalkListBaseAdapter mba;
 //	private String path =  Environment.getExternalStorageDirectory().getPath()+File.separator+"talklist.ls";
 	private String path;
+
+	private MyService.MyBinder mBinder;
+	private MyService mService;
+	private ServiceConnection mServiceConnection = new ServiceConnection() { 
+		@Override
+		public void onServiceConnected(ComponentName name, IBinder service) {
+			// TODO Auto-generated method stub
+			Log.i("Service live", "connect");
+			mBinder = (MyService.MyBinder) service;
+			mService = mBinder.getService();
+			
+//			updateTextView();
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName name) {
+			// TODO Auto-generated method stub
+			Log.i("Service live", "disconnect");
+//			mIsBind = false;
+		}
+		
+	};
+
+	private BroadcastReceiver bcReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// TODO Auto-generated method stub
+			int position = intent.getIntExtra("position", -1);
+			if(position >= 0) {
+				String retMsg = intent.getExtras().getString("word");
+				if(retMsg.length() > 0) {
+					talks.get(position).setLastMessage(retMsg);
+					mba.notifyDataSetChanged();
+				}
+			}
+		}
+	};
+
 		
 //	//用于接收线程发来的Message
 //	Handler hd = new Handler() {
@@ -58,6 +99,12 @@ public class TalkList extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_talk_list);
+
+		//启动服务
+		Intent it0 = new Intent();
+		it0.setClass(TalkList.this, MyService.class);
+//		bindService(it0, mServiceConnection, Context.BIND_AUTO_CREATE);
+		startService(it0);
 		
 		init();
 		setTalkList();
@@ -187,63 +234,47 @@ public class TalkList extends Activity {
 	private void unRegisterBroidcastReceiver() {
 		this.unregisterReceiver(bcReceiver);
 	}
-	
-	private BroadcastReceiver bcReceiver = new BroadcastReceiver() {
-		
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			// TODO Auto-generated method stub
-			int position = intent.getIntExtra("position", -1);
-			if(position >= 0) {
-				String retMsg = intent.getExtras().getString("word");
-				if(retMsg.length() > 0) {
-					talks.get(position).setLastMessage(retMsg);
-					mba.notifyDataSetChanged();
-				}
-			}
-		}
-	};
-
-	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
-		Log.i("live", "start");
-	}
-	@Override
-	protected void onRestart() {
-		// TODO Auto-generated method stub
-		super.onRestart();
-		Log.i("live", "restart");
-	}
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		Log.i("live", "resume");
-	}
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-		Log.i("live", "pause");
-	}
-	@Override
-	protected void onStop() {
-		// TODO Auto-generated method stub
-		super.onStop();
-		Log.i("live", "stop");
-	}
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-		Log.i("live", "destory");
-	}
-	public void clickToSee(View v) {
-		// TODO Auto-generated method stub
-//				((TextView)v).setText("XXXX");;
-	}
+//	
+//	@Override
+//	protected void onStart() {
+//		// TODO Auto-generated method stub
+//		super.onStart();
+//		Log.i("live", "start");
+//	}
+//	@Override
+//	protected void onRestart() {
+//		// TODO Auto-generated method stub
+//		super.onRestart();
+//		Log.i("live", "restart");
+//	}
+//	@Override
+//	protected void onResume() {
+//		// TODO Auto-generated method stub
+//		super.onResume();
+//		Log.i("live", "resume");
+//	}
+//	@Override
+//	protected void onPause() {
+//		// TODO Auto-generated method stub
+//		super.onPause();
+//		Log.i("live", "pause");
+//	}
+//	@Override
+//	protected void onStop() {
+//		// TODO Auto-generated method stub
+//		super.onStop();
+//		Log.i("live", "stop");
+//	}
+//	@Override
+//	protected void onDestroy() {
+//		// TODO Auto-generated method stub
+//		super.onDestroy();
+//		Log.i("live", "destory");
+//	}
+//	public void clickToSee(View v) {
+//		// TODO Auto-generated method stub
+////				((TextView)v).setText("XXXX");;
+//	}
 	public void jump2Login(View v) {
 		Intent it = new Intent();
 		it.setClass(TalkList.this, Login.class);
@@ -335,6 +366,15 @@ public class TalkList extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 				// TODO Auto-generated method stub
+//		//解除绑定服务
+//		Intent its = new Intent();
+//		its.setClass(TalkList.this, MyService.class);
+//		unbindService(mServiceConnection);
+		//解除绑定服务
+		Intent its = new Intent();
+		its.setClass(TalkList.this, MyService.class);
+		stopService(its);
+
 				talks.get(position).setMessageNum(0);
 				mba.notifyDataSetChanged();
 				

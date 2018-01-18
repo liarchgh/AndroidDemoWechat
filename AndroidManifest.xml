@@ -33,6 +33,11 @@
             android:name=".Talk"
             android:label="@string/title_activity_talk" >
         </activity>
+        <service
+            android:name=".MyService"
+            android:label="AAAAAAAAAA"
+            >
+        </service>
 <!--         <receiver
             android:name="com.neu.demofirst.GlobalReceiver"
             android:label="@string/app_name"

@@ -68,11 +68,6 @@ public class Talk extends Activity {
 		sts.add(new OneSentence(null, bm, toSendString));
 		((TalkBaseAdapter)stLl.getAdapter()).notifyDataSetChanged();
 
-//		it = new Intent();
-//		it.setClass(Talk.this, TalkList.class);
-//		it.putExtra("word", toSendString);
-//		Talk.this.setResult(Talk.Status_LastMessage, it);
-
 		it = new Intent();
 		it.setAction("TalkMessage");
 		it.putExtra("word", toSendString);
