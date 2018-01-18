@@ -9,6 +9,7 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.FileHandler;
@@ -100,11 +101,11 @@ public class TalkList extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_talk_list);
 
-		//启动服务
-		Intent it0 = new Intent();
-		it0.setClass(TalkList.this, MyService.class);
-//		bindService(it0, mServiceConnection, Context.BIND_AUTO_CREATE);
-		startService(it0);
+//		//启动服务
+//		Intent it0 = new Intent();
+//		it0.setClass(TalkList.this, MyService.class);
+////		bindService(it0, mServiceConnection, Context.BIND_AUTO_CREATE);
+//		startService(it0);
 		
 		init();
 		setTalkList();
@@ -324,24 +325,38 @@ public class TalkList extends Activity {
 //					ms.arg1 = 22;
 //					hd.sendMessage(ms);
 
-					Log.i("talks2file", "start");
+//					Log.i("talks2file", "start");
 					if(!(new File(path).exists())) {
 						Random rd = new Random();
 						talks = new ArrayList<TalkData>();
 						for(int i = 0; i < 100; ++i) {
-							talks.add(new TalkData(rd.nextLong(), rd.nextLong(), null,
+							//保证ID唯一
+							Long id = rd.nextLong();
+							for(Iterator<TalkData> it = talks.iterator(); it.hasNext(); ) {
+								if(id == it.next().getUserId()) {
+									id = rd.nextLong();
+									it = talks.iterator();
+								}
+							}
+							talks.add(new TalkData(id, rd.nextLong(), null,
 								0, "Name:"+i, "M:"+i, Math.abs(rd.nextInt()%120)));
 						}
 				
-						Log.i("talks2file", "has not file");
+//						Log.i("talks2file", "has not file");
 						ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path));
 						oos.writeObject(talks);
-						Log.i("talks2file", "success");
+//						Log.i("talks2file", "success");
 						oos.close();
 					}
 					else {
 						ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path));
-						talks = (List<TalkData>) ois.readObject();
+						Object tempO = ois.readObject();
+						if(tempO instanceof List<?>) {
+							List<?> tempL = (List<?>) tempO;
+							if(tempL.size()>0
+									&& tempL.get(0) instanceof TalkData)
+							talks = (List<TalkData>)tempO;
+						}
 						ois.close();
 					}
 				} catch (FileNotFoundException e1) {
@@ -370,10 +385,10 @@ public class TalkList extends Activity {
 //		Intent its = new Intent();
 //		its.setClass(TalkList.this, MyService.class);
 //		unbindService(mServiceConnection);
-		//解除绑定服务
-		Intent its = new Intent();
-		its.setClass(TalkList.this, MyService.class);
-		stopService(its);
+//		//解除绑定服务
+//		Intent its = new Intent();
+//		its.setClass(TalkList.this, MyService.class);
+//		stopService(its);
 
 				talks.get(position).setMessageNum(0);
 				mba.notifyDataSetChanged();
@@ -410,7 +425,7 @@ public class TalkList extends Activity {
 						
 						Intent it = new Intent();
 						it.setClass(TalkList.this, Talk.class);
-						it.putExtra("position", position);
+						it.putExtra("userID", position);
 						TalkList.this.startActivity(it);
 					}
 				}).start();

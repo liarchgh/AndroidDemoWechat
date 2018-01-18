@@ -60,29 +60,29 @@ public class Login extends Activity {
 	private LinearLayout userNameLl;
 	private int finishSum = 0;
 	
-	private MyService.MyBinder mBinder;
-	private MyService mService;
+//	private MyService.MyBinder mBinder;
+//	private MyService mService;
 //	private boolean mIsBind;
 
-	private ServiceConnection mServiceConnection = new ServiceConnection() { 
-		@Override
-		public void onServiceConnected(ComponentName name, IBinder service) {
-			// TODO Auto-generated method stub
-			Log.i("Service live", "connect");
-			mBinder = (MyBinder) service;
-			mService = mBinder.getService();
-			
-//			updateTextView();
-		}
-
-		@Override
-		public void onServiceDisconnected(ComponentName name) {
-			// TODO Auto-generated method stub
-			Log.i("Service live", "disconnect");
-//			mIsBind = false;
-		}
-		
-	};
+//	private ServiceConnection mServiceConnection = new ServiceConnection() { 
+//		@Override
+//		public void onServiceConnected(ComponentName name, IBinder service) {
+//			// TODO Auto-generated method stub
+//			Log.i("Service live", "connect");
+//			mBinder = (MyBinder) service;
+//			mService = mBinder.getService();
+//			
+////			updateTextView();
+//		}
+//
+//		@Override
+//		public void onServiceDisconnected(ComponentName name) {
+//			// TODO Auto-generated method stub
+//			Log.i("Service live", "disconnect");
+////			mIsBind = false;
+//		}
+//		
+//	};
 
 	//分发事件
 //	@Override
@@ -100,11 +100,11 @@ public class Login extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 
-		//启动服务
-		Intent it0 = new Intent();
-		it0.setClass(Login.this, MyService.class);
-//		bindService(it0, mServiceConnection, Context.BIND_AUTO_CREATE);
-		startService(it0);
+//		//启动服务
+//		Intent it0 = new Intent();
+//		it0.setClass(Login.this, MyService.class);
+////		bindService(it0, mServiceConnection, Context.BIND_AUTO_CREATE);
+//		startService(it0);
 		
 		userName = (EditText)findViewById(R.id.userName);
 		passWord = (EditText)findViewById(R.id.passWord);

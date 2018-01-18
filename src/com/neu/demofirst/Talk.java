@@ -29,14 +29,14 @@ public class Talk extends Activity {
 	private Bitmap bm = null;
 	public static int Status_LastMessage;
 	private Intent it = null;
-	private int position;
+	private int userID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_talk);
 		
-		this.position = getIntent().getIntExtra("position", -1);
+		this.userID = getIntent().getIntExtra("position", -1);
 		stLl = (ListView)Talk.this.findViewById(R.id.sentencesLl);
 		toSend = (EditText)Talk.this.findViewById(R.id.toSend);
 		
