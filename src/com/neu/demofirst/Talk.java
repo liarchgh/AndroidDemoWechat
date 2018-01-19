@@ -30,25 +30,27 @@ public class Talk extends Activity {
 	public static int Status_LastMessage;
 	private Intent it = null;
 	private long userID;
+	private String path;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_talk);
-		
+	
 		this.userID = getIntent().getLongExtra("userID", -1);
+		this.path = getIntent().getStringExtra("path");
 		stLl = (ListView)Talk.this.findViewById(R.id.sentencesLl);
 		toSend = (EditText)Talk.this.findViewById(R.id.toSend);
-		
+	
 		Resources rs = Talk.this.getResources();
 		bm = new BitmapDrawable(rs.openRawResource(R.drawable.timg)).getBitmap();
-		
+	
 		sts = new ArrayList<OneSentence>();
 		Random rd = new Random();
 		OneSentence tempSt;
 		Bitmap myIcon = bm,
 				otherIcon = bm;
-		for(int i = 0; i < 100; ++i) {
+		for(int i = 0; i < 10; ++i) {
 			tempSt = new OneSentence();
 			if(rd.nextBoolean()) {
 				tempSt.setMyIcon(myIcon);
@@ -59,7 +61,6 @@ public class Talk extends Activity {
 			tempSt.setSentence(i+" fjklsd fjkds jkfjk dsjkf jkdsj fjdsk jfksdaj lkjfkdsj klfjlkdsaj lkfjsdakl jfkldsj klfjdskl fjflkds jkfjds jfdsj fjdsk jfkdsj lkfjdslk jfklds sdf");
 			sts.add(tempSt);
 		}
-Log.i("userid", ""+userID);
 		
 		stLl.setAdapter(new TalkBaseAdapter(sts, Talk.this));
 	}
