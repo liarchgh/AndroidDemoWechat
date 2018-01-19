@@ -4,26 +4,40 @@
     android:layout_height="match_parent"
     tools:context="${relativePackage}.${activityClass}" >
     
-    <fragment 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/showPage"
-        />
     <LinearLayout 
+        android:id="@+id/buttons"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
         >
         <Button 
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:text="Talks"
+            android:onClick="jump2Talks"
             />
         <Button 
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:text="Contacts"
+            android:onClick="jump2Contacts"
             />
     </LinearLayout>
+
+    <LinearLayout 
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_above="@id/buttons"
+		>
+		<fragment
+			android:id="@+id/showPage"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:name="com.neu.demofirst.TestFragment"
+			/>
+	</LinearLayout>
     
 </RelativeLayout>
