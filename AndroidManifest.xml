@@ -23,11 +23,6 @@
             android:name=".Login"
             android:label="@string/title_activity_login"
             android:noHistory="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Talk"
@@ -36,6 +31,11 @@
         <activity
             android:name=".Slide"
             android:label="@string/title_activity_slide" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <service
@@ -51,8 +51,16 @@
                 <action android:name="android.net.wifi.STATE_CHANGE"/>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
 			</intent-filter>
-        </receiver>
+        </receiver>
         -->
+        <activity
+            android:name=".InAPP"
+            android:label="@string/title_activity_in_app" >
+        </activity>
+        <activity
+            android:name=".Contact"
+            android:label="@string/title_activity_contact" >
+        </activity>
     </application>
 
 </manifest>
