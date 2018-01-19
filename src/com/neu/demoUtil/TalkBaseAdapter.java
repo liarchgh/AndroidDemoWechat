@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 public class TalkBaseAdapter extends BaseAdapter {
 	private List<OneSentence>sentences;
-	private Context inContext;
+	private Context inContext = null;
 	
 	public TalkBaseAdapter(List<OneSentence>sentences, Context inContext) {
 		// TODO Auto-generated constructor stub
@@ -61,21 +61,17 @@ public class TalkBaseAdapter extends BaseAdapter {
 	private void bindDataAndView(int position, View v) {
 		Content ct = (Content)v.getTag();
 		OneSentence as = sentences.get(position);
-		
+	
 		ct.sentence.setText(as.getSentence());
-		ct.myIcon.setImageBitmap(as.getMyIcon());
-		ct.otherIcon.setImageBitmap(as.getOtherIcon());
-		if(as.getMyIcon() == null) {
+		ct.myIcon.setImageBitmap(BitmapUtil.fromByteArray(as.getMyIcon()));
+		ct.otherIcon.setImageBitmap(BitmapUtil.fromByteArray(as.getOtherIcon()));
+		if(as.getMyIcon().length <= 0) {
 			ct.toMe.setVisibility(View.INVISIBLE);
+			ct.toOther.setVisibility(View.VISIBLE);
 		}
 		else {
 			ct.toMe.setVisibility(View.VISIBLE);
-		}
-		if(as.getOtherIcon() == null) {
 			ct.toOther.setVisibility(View.INVISIBLE);
-		}
-		else {
-			ct.toOther.setVisibility(View.VISIBLE);
 		}
 	}
 	

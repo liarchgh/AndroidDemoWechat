@@ -7,4 +7,5 @@ public class OneTalkViewContent {
 	public TextView lastMessage;
 	public TextView time;
 	public TextView num;
+	public long userID;
 }
