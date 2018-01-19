@@ -1,19 +1,22 @@
 package com.neu.demoUtil;
 
-import android.graphics.Bitmap;
+import java.io.Serializable;
+
 import android.net.Uri;
 
-public class OneSentence {
+public class OneSentence implements Serializable{
+	private byte[] otherIcon;
+	private byte[] myIcon;
+	private String sentence;
+	private boolean fromOther;
+
 	public boolean isFromOther() {
 		return fromOther;
 	}
+
 	public void setFromOther(boolean fromOther) {
 		this.fromOther = fromOther;
 	}
-	private Bitmap otherIcon;
-	private Bitmap myIcon;
-	private String sentence;
-	private boolean fromOther;
 
 	public OneSentence() {
 		super();
@@ -22,7 +25,7 @@ public class OneSentence {
 		sentence = null;
 		fromOther = false;
 	}
-	public OneSentence(Bitmap otherIcon, Bitmap myIcon, String sentence) {
+	public OneSentence(byte[] otherIcon, byte[] myIcon, String sentence) {
 		super();
 		this.otherIcon = otherIcon;
 		this.myIcon = myIcon;
@@ -32,16 +35,16 @@ public class OneSentence {
 		super();
 		this.sentence = sentence;
 	}
-	public Bitmap getOtherIcon() {
+	public byte[] getOtherIcon() {
 		return otherIcon;
 	}
-	public void setOtherIcon(Bitmap otherIcon) {
+	public void setOtherIcon(byte[] otherIcon) {
 		this.otherIcon = otherIcon;
 	}
-	public Bitmap getMyIcon() {
+	public byte[] getMyIcon() {
 		return myIcon;
 	}
-	public void setMyIcon(Bitmap myIcon) {
+	public void setMyIcon(byte[] myIcon) {
 		this.myIcon = myIcon;
 	}
 	public String getSentence() {

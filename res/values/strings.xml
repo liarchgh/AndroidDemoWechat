@@ -6,5 +6,6 @@
     <string name="title_activity_login">IChat</string>
     <string name="title_activity_jump">Jump</string>
     <string name="title_activity_talk">Talk</string>
+    <string name="title_activity_slide">Slide</string>
 
 </resources>
