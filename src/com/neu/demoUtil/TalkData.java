@@ -2,19 +2,18 @@ package com.neu.demoUtil;
 
 import java.io.Serializable;
 
-import android.graphics.Bitmap;
 import android.net.Uri;
 
 public class TalkData implements Serializable{
 	private long userId;
 	private long time;
-	private Bitmap iconUri;
+	private byte[] iconUri;
 	private int state;
 	private String userName;
 	private String lastMessage;
 	private int messageNum;
 	
-	public TalkData(long userId, long time, Bitmap iconUri, int state, String userName, String lastMessage,
+	public TalkData(long userId, long time, byte[] iconUri, int state, String userName, String lastMessage,
 			int messageNum) {
 		super();
 		this.userId = userId;
@@ -37,10 +36,10 @@ public class TalkData implements Serializable{
 	public void setTime(long time) {
 		this.time = time;
 	}
-	public Bitmap getIconUri() {
+	public byte[] getIconUri() {
 		return iconUri;
 	}
-	public void setIconUri(Bitmap iconUri) {
+	public void setIconUri(byte[] iconUri) {
 		this.iconUri = iconUri;
 	}
 	public int getState() {
